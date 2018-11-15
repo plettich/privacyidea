@@ -1,23 +1,29 @@
 language: python
 sudo: false
+
 python:
   - 2.7
   - 3.4
   - 3.5
   - 3.6
+
 # command to install dependencies
 install:
   - "pip install ."
   - "pip install mock"
   - "pip install coveralls"
   - "pip install codecov"
-  - "pip install -r requirements.txt"
   - "pip install smpplib"
+  - "pip install pyparsing"
+  - "pip install responses"
+  - "pip install pandas"
+#  - "pip install -r requirements.txt"
+
 # split the test run according to
 # http://blog.travis-ci.com/2012-11-28-speeding-up-your-tests-by-parallelizing-them/
-#env:
-#  - TESTSCRIPT=tests/test_api_system.py
-#  - TESTSCRIPT=tests/test_api_token.py
+env:
+  - TESTS=tests/test_api_*.py
+  - TESTS=tests/test_lib_*.py
 #  - TESTSCRIPT=tests/test_api_users.py
 #  - TESTSCRIPT=tests/test_api_validate.py
 #  - TESTSCRIPT=tests/test_db_model.py
@@ -36,14 +42,16 @@ install:
 #  - TESTSCRIPT=tests/test_lib_tokens_yubikey.py
 #  - TESTSCRIPT=tests/test_lib_user.py
 #  - TESTSCRIPT=tests/test_resolver_realm.py
+
 matrix:
     allow_failures:
        - python: 3.4
        - python: 3.5
        - python: 3.6
+
 # command to run tests
 #script: "nosetests -v --with-coverage --cover-package=privacyidea $TESTSCRIPT"
-script: "nosetests -v --with-coverage --cover-package=privacyidea tests"
+script: "nosetests -v --with-coverage --cover-package=privacyidea $TESTS"
 
 after_success: 
     - codecov
