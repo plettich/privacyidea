@@ -126,7 +126,7 @@ class AuditTestCase(MyTestCase):
 
         # get one authentication during the last second
         r = self.Audit.get_count({"action": "/validate/check"}, success=True,
-                                 timedelta=datetime.timedelta(seconds=1))
+                                 timedelta=datetime.timedelta(seconds=2))
         self.assertEqual(r, 1)
 
     def test_03_lib_search(self):

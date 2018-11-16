@@ -10,20 +10,16 @@ python:
 # command to install dependencies
 install:
   - "pip install ."
-  - "pip install mock"
-  - "pip install coveralls"
-  - "pip install codecov"
-  - "pip install smpplib"
-  - "pip install pyparsing"
-  - "pip install responses"
-  - "pip install pandas"
-#  - "pip install -r requirements.txt"
+  - "pip install -r tests/requirements-test.txt"
 
 # split the test run according to
 # http://blog.travis-ci.com/2012-11-28-speeding-up-your-tests-by-parallelizing-them/
 env:
-  - TESTS=tests/test_api_*.py
-  - TESTS=tests/test_lib_*.py
+  global:
+    - PYTHONHASHSEED=random
+  matrix:
+    - TESTS=tests/test_api_*.py
+    - TESTS=tests/test_lib_*.py
 #  - TESTSCRIPT=tests/test_api_users.py
 #  - TESTSCRIPT=tests/test_api_validate.py
 #  - TESTSCRIPT=tests/test_db_model.py
