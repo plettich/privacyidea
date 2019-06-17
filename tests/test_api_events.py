@@ -6,6 +6,17 @@ from privacyidea.lib.config import set_privacyidea_config
 
 class APIEventsTestCase(MyApiTestCase):
 
+    def test_00_api_errors(self):
+        # check for auth error
+        with self.app.test_request_context('/event',
+                                           method='GET'):
+            res = self.app.full_dispatch_request()
+            self.assertEqual(res.status_code, 401, res)
+            self.assertEqual(res.json['result']['error']['code'], 4033, res.json)
+
+        # check for policy error
+        set_policy()
+
     def test_01_crud_events(self):
 
         # list empty events
@@ -15,9 +26,19 @@ class APIEventsTestCase(MyApiTestCase):
 
             res = self.app.full_dispatch_request()
             self.assertTrue(res.status_code == 200, res)
-            result = json.loads(res.data.decode('utf8')).get("result")
-            detail = json.loads(res.data.decode('utf8')).get("detail")
+            result = res.json.get("result")
             self.assertEqual(result.get("value"), [])
+            self.assertIn('signature', res.json, res.json)
+
+        # Check if the /event request writes a valid audit entry
+        with self.app.test_request_context('/audit/',
+                                           method='GET',
+                                           headers={'Authorization': self.at}):
+            res = self.app.full_dispatch_request()
+            self.assertTrue(res.status_code == 200, res)
+            auditentry = res.json.get("result").get("value").get("auditdata")[0]
+            self.assertEqual(auditentry['action'], 'GET /event', auditentry)
+            self.assertEqual(auditentry['success'], 1, auditentry)
 
         # create an event configuration
         param = {
