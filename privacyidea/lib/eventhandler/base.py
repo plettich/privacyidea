@@ -45,7 +45,6 @@ from privacyidea.lib.utils import (compare_condition, compare_value_value,
 import datetime
 from dateutil.tz import tzlocal
 import re
-import json
 import logging
 from privacyidea.lib.tokenclass import DATE_FORMAT
 
@@ -299,7 +298,7 @@ class BaseEventHandler(object):
     @staticmethod
     def _get_response_content(response):
         if response:
-            content = json.loads(response.data)
+            content = response.json
         else:
             # In Pre-Handling we have no response and no content
             content = {}
