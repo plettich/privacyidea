@@ -10,6 +10,7 @@ PWFILE2 = "tests/testdata/passwords"
 
 from .base import MyTestCase
 from privacyidea.lib.resolver import (save_resolver, delete_resolver)
+from privacyidea.lib.config import set_privacyidea_config
 from privacyidea.lib.realm import (set_realm, delete_realm)
 from privacyidea.lib.user import (User, create_user,
                                   get_username,
@@ -17,7 +18,7 @@ from privacyidea.lib.user import (User, create_user,
                                   split_user,
                                   get_user_from_param)
 from . import ldap3mock
-from .test_lib_resolver import objectGUIDs, LDAPDirectory_small
+from .test_lib_resolver import LDAPDirectory_small
 
 
 class UserTestCase(MyTestCase):
@@ -167,8 +168,10 @@ class UserTestCase(MyTestCase):
         # The user is not split, since there is no real "non_existing_realm.com"
         user = split_user("user@non_existing_realm.com")
         self.assertEqual(user, ("user@non_existing_realm.com", ""))
-        
+
     def test_09_get_user_from_param(self):
+        # enable splitAtSign
+        set_privacyidea_config("splitAtSign", "1")
         user = get_user_from_param({"user": "cornelius"})
         self.assertTrue(user.realm == self.realm1, user)
         self.assertTrue(user.resolver == self.resolvername1, user)
@@ -199,7 +202,27 @@ class UserTestCase(MyTestCase):
                  "realm": self.realm2}
         user = get_user_from_param(param)
         self.assertEqual("{0!s}".format(user), "<cornelius.resolver1@realm2>")
-        
+
+        # test with splitAtSign set to '0'
+#        set_privacyidea_config("splitAtSign", "0")
+#        user, realm = split_user("user@realm1")
+#        self.assertEqual(user, "user@realm1", (user, realm))
+#        self.assertEqual(realm, "", (user, realm))
+#
+#        user = split_user("user")
+#        self.assertTrue(user == ("user", ""), user)
+#
+#        user, realm = split_user("user@email@realm1")
+#        self.assertEqual(user, "user@email@realm1", user)
+#        self.assertEqual(realm, "", realm)
+#
+#        user, realm = split_user("realm1\\user")
+#        self.assertEqual(user, "user", user)
+#        self.assertEqual(realm, "realm1", realm)
+#
+#        # reset splitAtSign setting
+#        set_privacyidea_config("splitAtSign", "1")
+
     def test_10_check_user_password(self):
         (added, failed) = set_realm("passwordrealm",
                                     [self.resolvername3])
@@ -225,8 +248,7 @@ class UserTestCase(MyTestCase):
         resolver_sF = sF.get(self.resolvername1)
         self.assertTrue("username" in resolver_sF, resolver_sF)
         self.assertTrue("userid" in resolver_sF, resolver_sF)
-        
-        
+
     def test_12_resolver_priority(self):
         # Test the priority of resolvers.
         # we create resolvers with the same user in it. Depending on the
