@@ -132,8 +132,7 @@ class RadiusTokenClass(RemoteTokenClass):
             self.add_tokeninfo("radius.server", radiusServer)
             radius_secret = getParam(param, "radius.secret", optional=required)
             self.token.set_otpkey(hexlify_and_unicode(radius_secret))
-            system_settings = getParam(param, "radius.system_settings",
-                                       default=False)
+            system_settings = getParam(param, "radius.system_settings")
             self.add_tokeninfo("radius.system_settings", system_settings)
 
             if not (radiusServer or radius_secret) and not system_settings:

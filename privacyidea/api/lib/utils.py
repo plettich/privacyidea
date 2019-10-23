@@ -57,6 +57,7 @@ def getParam(param, key, optional=True, default=None, allow_empty=True, allowed_
     :param param: the dictionary of parameters
     :type param: dict
     :param key: the name of the parameter
+    :type key: str
     :param optional: defines if this parameter is optional or not
                      an exception is thrown if the parameter is required
                      otherwise: nothing done!
@@ -76,7 +77,9 @@ def getParam(param, key, optional=True, default=None, allow_empty=True, allowed_
 
     if key in param:
         ret = param[key]
-    elif default:
+    # we have to check for None explicitly since an empty dict or '0' as a
+    # default value would also evaluate to False
+    elif default is not None:
         ret = default
     elif not optional:
         raise ParameterError("Missing parameter: {0!r}".format(key), id=905)
@@ -85,7 +88,7 @@ def getParam(param, key, optional=True, default=None, allow_empty=True, allowed_
         raise ParameterError("Parameter {0!r} must not be empty".format(key), id=905)
 
     if allowed_values and ret not in allowed_values:
-            ret = default
+        ret = default
 
     return ret
 

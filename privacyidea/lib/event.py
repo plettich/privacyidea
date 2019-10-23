@@ -213,7 +213,7 @@ def set_event(name, event, handlermodule, action, conditions=None,
         performed.
     :type conditions: dict
     :param ordering: An optional ordering of the event definitions.
-    :type ordering: integer
+    :type ordering: int
     :param options: Additional options, that are needed as parameters for the
         action
     :type options: dict

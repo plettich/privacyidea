@@ -62,7 +62,7 @@ def create(identifier=None):
     param = request.all_data
     identifier = identifier.replace(" ", "_")
     url = getParam(param, "url", required)
-    tls = is_true(getParam(param, "tls", default="1"))
+    tls = is_true(getParam(param, "tls", default=True))
     description = getParam(param, "description", default="")
 
     r = add_privacyideaserver(identifier, url=url, tls=tls,
@@ -125,10 +125,9 @@ def test():
     param = request.all_data
     identifier = getParam(param, "identifier", required)
     url = getParam(param, "url", required)
-    tls = is_true(getParam(param, "tls", default="1"))
+    tls = is_true(getParam(param, "tls", default=True))
     user = getParam(param, "username", required)
     password = getParam(param, "password", required)
-
 
     s = PrivacyIDEAServerDB(identifier=identifier, url=url, tls=tls)
     r = PrivacyIDEAServer.request(s, user, password)

@@ -461,8 +461,8 @@ class EmailTokenClass(HotpTokenClass):
         recipient = getParam(params, "email.recipient", optional=False)
         password = getParam(params, "email.password")
         username = getParam(params, "email.username")
-        port = getParam(params, "email.port", default=25)
-        email_tls = getParam(params, "email.tls", default=False)
+        port = int(getParam(params, "email.port", default=25))
+        email_tls = is_true(getParam(params, "email.tls", default=False))
         r = send_email_data(mailserver, subject, message, mail_from,
                             recipient, username=username,
                             password=password, port=port, email_tls=email_tls)
