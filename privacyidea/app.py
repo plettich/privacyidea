@@ -66,8 +66,7 @@ from flask_babel import Babel
 
 
 ENV_KEY = "PRIVACYIDEA_CONFIGFILE"
-MY_LOG_FORMAT = "[%(asctime)s][%(process)d][%(thread)d][%(levelname)s][%(" \
-                "name)s:%(lineno)d] %(message)s"
+MY_LOG_FORMAT = "[%(asctime)s][%(process)d][%(thread)d][%(levelname)s][%(name)s:%(lineno)d] %(message)s"
 
 PI_LOGGING_CONFIG = {
     "version": 1,
