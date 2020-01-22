@@ -5,7 +5,7 @@
 * PostgreSQL database adapter removed from default installation
 
   When installing privacyIDEA from github or via Pypi, the ``psycopg2`` package
-  wont be installed anymore. Instead one can use 
+  wont be installed anymore. Instead one can use the call
   ``pip install privacyIDEA[postgres]`` to also install the required packages.
 
 ## Update from 3.1 to 3.2
