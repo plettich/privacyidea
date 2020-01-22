@@ -46,7 +46,7 @@ privacyIDEA
     
 privacyIDEA is an open solution for strong two-factor authentication like 
 OTP tokens, SMS, smartphones or SSH keys.
-Using privacyIDEA you can enhance your existing applications like local login 
+Using privacyIDEA you can enhnce your existing applications like local login 
 (PAM, Windows Credential Provider), 
 VPN, remote access, SSH connections, access to web sites or web portals with 
 a second factor during authentication. Thus boosting the security of your 
@@ -103,7 +103,7 @@ If you want to setup a development environment start like this::
     
 .. _testing_env:
 
-You may additionally want to set up your environment for testing, by adding the
+You may aditionally want to set up your environment for testing, by adding the
 additional dependencies::
 
     pip install -r tests/requirements.txt
