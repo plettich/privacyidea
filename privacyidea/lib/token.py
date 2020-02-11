@@ -455,7 +455,7 @@ def get_tokens_paginate(tokentype=None, realm=None, assigned=None, user=None,
     :type psize: int
     :param page: The number of the page to view. Starts with 1 ;-)
     :type page: int
-    :param allowed_realms: A list of realms, that the admin is allowed to see
+    :param allowed_realms: A list of realms, that the admin is allowd to see
     :type allowed_realms: list
     :return: dict with tokens, prev, next and count
     :rtype: dict
@@ -1170,7 +1170,7 @@ def assign_token(serial, user, pin=None, encrypt_pin=False, err_message=None):
     :type user: User object
     :param pin: The PIN for the newly assigned token.
     :type pin: basestring
-    :param encrypt_pin: Whether the PIN should be stored in an encrypted way
+    :param encrypt_pin: Whether the PIN should be stored in an crypted way
     :type encrypt_pin: bool
     :param err_message: The error message, that is displayed in case the token is already assigned
     :type err_message: basestring
