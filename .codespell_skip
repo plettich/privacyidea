@@ -1,0 +1,9 @@
+*.mo
+*.po
+*.css
+*.map
+./privacyidea/static/components/translation/translations.js
+./privacyidea/static/contrib/*
+./privacyidea/translations/*
+./po/*
+
