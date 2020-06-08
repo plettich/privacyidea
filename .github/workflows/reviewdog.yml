@@ -9,4 +9,4 @@ jobs:
       - name: codespell
         uses: codespell-project/actions-codespell@master
         with:
-          skip: "./privacyidea/static/contrib/*, ./privacyidea/static/components/translation/*, ./privacyidea/translations/*, ./po/*"
+          skip: "./privacyidea/static/contrib/*,./privacyidea/static/components/translation/*,./privacyidea/translations/*,./po/*"
