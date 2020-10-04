@@ -1,7 +1,31 @@
 jobs:
-  build:
+  test_generic:
+    description: Run all tests with the latest packages
+    executor: python/default
+    steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      # We do not want any caching (always the latest packages) therefore we
+      # install the packages directly
+      - run:
+          command: pip install pytest pytest-cov mock responses testfixtures
+      - run:
+          command: pip install -e .
+      - run:
+          command: mkdir test-report
+      - run:
+          command: |
+            python -b -m pytest --cov=privacyidea --junit-xml=test-report/report.xml tests/
+          name: Test generic
+      - store_artifacts:
+          path: test-report/report.xml
+          destination: generic-test-report
+
+  test_mysql:
+    description: Run all tests with a mysql database
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
         environment:
           TEST_DATABASE_URL: mysql+pymysql://pi:test123@localhost/pi
       - image: circleci/mysql:latest-ram
@@ -18,9 +42,14 @@ jobs:
           pip-dependency-file: tests/requirements.txt
           pkg-manager: pip
       - run:
+          command: mkdir test-report
+      - run:
           command: |
-            python -b -m pytest --cov=privacyidea tests/
-          name: Test
+            python -b -m pytest --cov=privacyidea --junit-xml=test-report/report.xml tests/
+          name: Test MySQL
+      - store_artifacts:
+          path: test-report/report.xml
+          destination: mysql-test-report
 
 orbs:
   python: circleci/python@1.1.0
@@ -29,5 +58,15 @@ version: 2.1
 workflows:
   main:
     jobs:
-      - build
+      - test_generic
 
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 17 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test_mysql
