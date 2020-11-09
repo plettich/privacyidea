@@ -41,6 +41,14 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
+      - run:
+          name: Check for changes
+          command: |
+            if [[ -z $(git log --since=1.day) ]] ; then
+              curl --request POST \
+                   --url https://circleci.com/api/v2/workflow/${CIRCLE_WORKFLOW_ID}/cancel \
+                   --header "Circle-Token: ${CIRCLE_TOKEN}"
+            fi
       - run: pip install -r tests/requirements.txt
       - run: mkdir -p test-results/mysql
       - run:
@@ -58,11 +66,11 @@ workflows:
     triggers:
       - schedule:
           # Start the nightly test at 5:00 UTC only on branch "master"
-          cron: "0 5 * * *"
+          cron: "40 14 * * *"
           filters:
             branches:
               only:
                 - master
     jobs:
-      - test_generic
+#      - test_generic
       - test_mysql
