@@ -44,20 +44,25 @@ jobs:
       - run:
           name: Check for changes
           command: |
-            git log --since=1.day
             if [[ -z $(git log --since=1.minute) ]] ; then
               echo ${CIRCLE_WORKFLOW_ID}
               curl --request POST \
                    --url https://circleci.com/api/v2/workflow/${CIRCLE_WORKFLOW_ID}/cancel \
                    --header "Circle-Token: ${CIRCLE_TOKEN}"
-              echo $?
             fi
+      - restore_cache:
+          keys: v1-deps-{{ checksum requirements.txt }}
+          keys: v1-deps-
       - run: pip install -r tests/requirements.txt
       - run: mkdir -p test-results/mysql
       - run:
           command: |
             python -b -m pytest --cov=privacyidea --junit-xml=test-results/mysql/results.xml tests/
           name: MySQL Test
+      - save_cache:
+          paths:
+            - "${PYENV_ROOT}"
+          key: v1-deps-{{ checksum requirements.txt }}
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -69,7 +74,7 @@ workflows:
     triggers:
       - schedule:
           # Start the nightly test at 5:00 UTC only on branch "master"
-          cron: "10 17 * * *"
+          cron: "20 18 * * *"
           filters:
             branches:
               only:
