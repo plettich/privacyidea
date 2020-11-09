@@ -43,15 +43,18 @@ jobs:
       - run: git submodule update --init
       - run:
           name: Check for changes
+          # Cancel workflow if there are no changes since one day
+          # (https://discuss.circleci.com/t/how-to-programmatically-end-or-cancel-the-workflow-build/37742)
           command: |
-            if [[ -z $(git log --since=1.minute) ]] ; then
-              echo ${CIRCLE_WORKFLOW_ID}
-              curl --request POST \
-                   --url https://circleci.com/api/v2/workflow/${CIRCLE_WORKFLOW_ID}/cancel \
-                   --header "Circle-Token: ${CIRCLE_TOKEN}"
+            if [[ -z $(git log --since=1.day) ]] ; then
+              circleci-agent step halt
+#              echo ${CIRCLE_WORKFLOW_ID}
+#              curl --request POST \
+#                   --url https://circleci.com/api/v2/project/gh/plettich/privacyidea/job/${CIRCLE_WORKFLOW_JOB_ID}/cancel \
+#                   --header "Circle-Token: ${CIRCLE_TOKEN}"
             fi
       - restore_cache:
-          key: v1-deps-{{ checksum requirements.txt }}
+          key: v1-deps-{{ checksum "requirements.txt" }}
       - run: pip install -r tests/requirements.txt
       - run: mkdir -p test-results/mysql
       - run:
@@ -61,7 +64,7 @@ jobs:
       - save_cache:
           paths:
             - "${PYENV_ROOT}"
-          key: v1-deps-{{ checksum requirements.txt }}
+          key: v1-deps-{{ checksum "requirements.txt" }}
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -73,7 +76,7 @@ workflows:
     triggers:
       - schedule:
           # Start the nightly test at 5:00 UTC only on branch "master"
-          cron: "20 18 * * *"
+          cron: "0 21 * * *"
           filters:
             branches:
               only:
