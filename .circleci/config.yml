@@ -51,8 +51,7 @@ jobs:
                    --header "Circle-Token: ${CIRCLE_TOKEN}"
             fi
       - restore_cache:
-          keys: v1-deps-{{ checksum requirements.txt }}
-          keys: v1-deps-
+          key: v1-deps-{{ checksum requirements.txt }}
       - run: pip install -r tests/requirements.txt
       - run: mkdir -p test-results/mysql
       - run:
