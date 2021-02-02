@@ -26,3 +26,6 @@ or, if you want to stay anonymous/pseudonymous, you can upload your information 
    https://lancelot.netknights.it/owncloud/s/a6sVvOT0Fb3utd9
 
 Thanks a lot for your support and your discretion.
+
+This is just a comment to see if automatic build is triggered.
+
