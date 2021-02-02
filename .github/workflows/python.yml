@@ -20,9 +20,25 @@ jobs:
       run_tests: ${{ steps.check.outputs.run_tests}}
     steps:
     - uses: actions/checkout@v2
+    - name: 'Get changed file list'
+      id: list
+      run: |
+        if [ $GITHUB_BASE_REF ]; then
+          git fetch origin $GITHUB_BASE_REF --depth=1
+          export DIFF=$( git diff --name-only --diff-filter=AM origin/$GITHUB_BASE_REF $GITHUB_SHA )
+          echo "Diff between origin/$GITHUB_BASE_REF and $GITHUB_SHA"
+        else
+          git fetch origin ${{ github.event.before }} --depth=1
+          export DIFF=$( git diff --name-only --diff-filter=AM ${{ github.event.before }} $GITHUB_SHA )
+          echo "Diff between ${{ github.event.before }} and $GITHUB_SHA"
+        fi
+        echo "$DIFF"
+        # Escape newlines (replace \n with %0A)
+        echo "::set-output name=diff::$( echo "$DIFF" | sed ':a;N;$!ba;s/\n/%0A/g' )"
     - name: 'Check for changes in sources'
       id: check
       env:
+        DIFF: ${{ steps.list.outputs.diff }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./contrib/gh_check_for_changes.sh
 
