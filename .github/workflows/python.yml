@@ -19,13 +19,11 @@ jobs:
     outputs:
       run_tests: ${{ steps.check.outputs.run_tests}}
     steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
     - uses: actions/checkout@v2
     - name: 'Check for changes in sources'
       id: check
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./contrib/gh_check_for_changes.sh
 
   build:

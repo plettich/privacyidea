@@ -20,6 +20,8 @@ include_patterns=(
   "^setup.py"
 )
 
+env
+
 if [[ -n ${GITHUB_BASE_REF} ]]; then
   echo "PR BASE: ${GITHUB_BASE_REF}"
   # we are in a pull request
@@ -28,10 +30,12 @@ if [[ -n ${GITHUB_BASE_REF} ]]; then
   # now get all changed files
   CHANGED_FILES=$( git diff --name-only --diff-filter=AM "${GITHUB_BASE_REF}"... )
 elif [[ -n ${GITHUB_REF} ]]; then
+  GITHUB_EVENT_BEFORE=$( echo ${GITHUB_CONTEXT} | jq '.event.before' )
   echo "PUSH BASE: ${GITHUB_REF}"
+  echo "PUSH BEFORE: ${GITHUB_EVENT_BEFORE}"
   # This is a push event to branch GITHUB_REF
-  git fetch origin "${GITHUB_REF}" --depth=1
-  CHANGED_FILES=$( git diff --name-only --diff-filter=AM "${GITHUB_REF}"... )
+  git fetch origin "${GITHUB_EVENT_BEFORE}" --depth=1
+  CHANGED_FILES=$( git diff --name-only --diff-filter=AM "${GITHUB_EVENT_BEFORE}"... )
 else
   # No idea what triggered this script
   echo "::warning::Unknown event type: ${GITHUB_EVENT_NAME}"
