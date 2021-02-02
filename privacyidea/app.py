@@ -67,6 +67,8 @@ from privacyidea.models import db
 
 ENV_KEY = "PRIVACYIDEA_CONFIGFILE"
 
+# Just a comment to simulate changes
+
 
 class PiResponseClass(Response):
     """Custom Response class overwriting the flask.Response.
