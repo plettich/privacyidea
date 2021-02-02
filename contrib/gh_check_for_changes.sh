@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ev
+set -e
 
 # setup patterns for files/directories to include
 declare -a include_patterns
@@ -19,8 +19,6 @@ include_patterns=(
   "^requirements.txt"
   "^setup.py"
 )
-
-env
 
 if [[ -n ${GITHUB_BASE_REF} ]]; then
   echo "PR BASE: ${GITHUB_BASE_REF}"
