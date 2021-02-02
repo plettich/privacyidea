@@ -26,13 +26,13 @@ if [[ -n ${GITHUB_BASE_REF} ]]; then
   # first get the base branch updated (github only clones with depth 1)
   git fetch origin "${GITHUB_BASE_REF}" --depth=1
   # now get all changed files
-  CHANGED_FILES=$( git diff --name-only --diff-filter=AM "${GITHUB_BASE_REF}"... )
+  CHANGED_FILES=$( git diff --name-only --diff-filter=AM origin/"${GITHUB_BASE_REF}"... )
 elif [[ -n ${GITHUB_REF} ]]; then
   GITHUB_EVENT_BEFORE=$( echo ${GITHUB_CONTEXT} | jq '.event.before' )
   echo "PUSH BASE: ${GITHUB_REF}"
   echo "PUSH BEFORE: ${GITHUB_EVENT_BEFORE}"
   # This is a push event to branch GITHUB_REF
-  git fetch origin "${GITHUB_EVENT_BEFORE}" --depth=1
+  git fetch -v origin "${GITHUB_EVENT_BEFORE}" --depth=1
   CHANGED_FILES=$( git diff --name-only --diff-filter=AM "${GITHUB_EVENT_BEFORE}"... )
 else
   # No idea what triggered this script
