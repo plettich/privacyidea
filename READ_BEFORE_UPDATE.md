@@ -1,5 +1,7 @@
 # Update Notes
 
+Some minor changes
+
 ## Update from 3.4 to 3.5
 
 * The audit log table now also records the start date and the duration
