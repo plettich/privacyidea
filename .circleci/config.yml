@@ -70,6 +70,29 @@ jobs:
       - store_artifacts:
           path: test-results/mysql
 
+  test_python:
+    description: Run all tests
+    docker:
+      # in the long run we could use matrix tests here for multiple python versions
+      - image: cimg/python:3.6
+    steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      - run: mkdir -p test-results/build
+      - restore_cache:
+          key: pi_build-{{ checksum "requirements.txt" }}
+      - run: pip install -r tests/requirements.txt
+      - run: pip install .
+      - run:
+          command: |
+            python -b -m pytest --cov=privacyidea --junit-xml=test-results/build/results.xml tests/
+          name: Test build
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results/build
+
 workflows:
   version: 2
   nightly:
@@ -84,3 +107,8 @@ workflows:
     jobs:
       - test_generic
       - test_mysql
+
+  testing:
+    jobs:
+      - test_python
+
