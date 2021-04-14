@@ -74,10 +74,10 @@ jobs:
     parameters:
       py-version:
         type: string
-    description: Run all tests
+    description: Run all tests with Python << parameters.py-version >>
     docker:
       # in the long run we could use matrix tests here for multiple python versions
-      - image: cimg/python:<<py-version>>
+      - image: cimg/python:<< parameters.py-version >>
     steps:
       - checkout
       - run: git submodule sync
@@ -114,7 +114,7 @@ workflows:
   testing:
     jobs:
       - test_python:
-        matrix:
-          parameters:
-            py-version: ["2.7", "3.5", "3.8"]
+          matrix:
+            parameters:
+              py-version: ["2.7", "3.5", "3.8"]
 
