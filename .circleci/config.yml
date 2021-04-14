@@ -85,6 +85,7 @@ jobs:
       - run: mkdir -p test-results/build
       - restore_cache:
           key: pi_build-{{ checksum "requirements.txt" }}
+      - run: pip install --upgrade pip setuptools
       - run: pip install -r tests/requirements.txt
       - run: pip install .
       - run:
