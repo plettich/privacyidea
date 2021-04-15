@@ -141,6 +141,8 @@ jobs:
         coverage combine coverage-*/.coverage
         coverage xml
 
+    - name: show env
+      run: env
     - name: Codecov upload
       uses: codecov/codecov-action@v1
       with:

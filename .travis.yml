@@ -29,5 +29,6 @@ env:
 # command to run tests
 script: "python -b -m pytest -v --cov=privacyidea --cov-append --durations=100 $TESTS"
 
-after_success: 
+after_success:
+    - env
     - codecov
