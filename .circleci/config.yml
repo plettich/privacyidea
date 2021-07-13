@@ -37,7 +37,7 @@ jobs:
           MYSQL_DATABASE: pi
           MYSQL_USER: pi
           MYSQL_PASSWORD: test123
-          MYSQL_RANDOM_ROOT_PASSWORD: yes
+          MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     steps:
       - checkout
       - run: git submodule sync
@@ -70,6 +70,7 @@ jobs:
         environment:
           POSTGRES_USER: pi
           POSTGRES_PASSWORD: test123
+          POSTGRES_DB: pi
     steps:
       - checkout
       - run: git submodule sync
@@ -99,7 +100,7 @@ workflows:
     triggers:
       - schedule:
           # Start the nightly test at 5:00 UTC only on branch "master"
-          cron: "0 12 * * *"
+          cron: "0 13 * * *"
           filters:
             branches:
               only:
