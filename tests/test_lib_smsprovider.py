@@ -1,16 +1,5 @@
-
 # -*- coding: utf-8 -*-
-__doc__="""
-This test file tests the modules:
- lib.smsprovider.httpsmsprovider
- lib.smsprovider.sipgateprovider
- lib.smsprovider.smtpsmsprovider
- lib.smsprovider.smppsmsprovider
- lib.smsprovider.scriptsmsprovider
-"""
-
 import six
-
 from .base import MyTestCase
 from privacyidea.lib.smsprovider.HttpSMSProvider import HttpSMSProvider
 from privacyidea.lib.smsprovider.SipgateSMSProvider import SipgateSMSProvider
@@ -34,6 +23,15 @@ import os
 from . import smtpmock
 from . import smppmock
 import mock
+
+__doc__ = """
+This test file tests the modules:
+ lib.smsprovider.httpsmsprovider
+ lib.smsprovider.sipgateprovider
+ lib.smsprovider.smtpsmsprovider
+ lib.smsprovider.smppsmsprovider
+ lib.smsprovider.scriptsmsprovider
+"""
 
 
 class SMSTestCase(MyTestCase):
@@ -615,15 +613,9 @@ class HttpSMSTestCase(MyTestCase):
                                                         'phone': '123456'})
                       ],)
         # Here we need to send the SMS
-        with mock.patch("logging.Logger.debug") as mock_log:
-            r = provider.submit_message("123456", 'Hello: 7')
-            self.assertTrue(r)
-            if six.PY2:
-                mock_log.assert_any_call("passing JSON data: {u'text': u'Hello: "
-                                         "7', u'phone': u'123456'}")
-            else:
-                mock_log.assert_any_call("passing JSON data: {'text': 'Hello: "
-                                         "7', 'phone': '123456'}")
+        r = provider.submit_message("123456", 'Hello: 7')
+        self.assertTrue(r)
+
         delete_smsgateway(identifier)
 
 

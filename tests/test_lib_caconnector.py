@@ -382,7 +382,7 @@ class LocalCATestCase(MyTestCase):
         # in case of a nonexistent template file, no exception is raised
         # but an empty value is returned
         cacon.template_file = "nonexistent"
-        self.assertEquals(cacon.get_templates(), {})
+        self.assertEqual(cacon.get_templates(), {})
 
 # Mock
 MY_CA_NAME = "192.168.47.11"
