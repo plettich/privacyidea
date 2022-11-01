@@ -60,13 +60,13 @@ jobs:
       - run: git submodule sync
       - run: git submodule update --init
       - restore_cache:
-          key: v1-deps-{{ checksum "requirements.txt" }}
+          key: v1-deps-<< parameters.db >>-{{ checksum "requirements.txt" }}
       - run: pip install -U pip
       - run: pip install -r tests/requirements.txt
       - when:
           condition:
             # see https://circleci.com/docs/configuration-reference#logic-statements
-            equal: [*postgres-executor, << parameters.db >> ]
+            equal: ['postgres', << parameters.db >> ]
           steps:
             - run: pip install psycopg2
       - run: mkdir -p test-results/<< parameters.db >>
