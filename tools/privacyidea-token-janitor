@@ -242,8 +242,6 @@ def build_tokenvalue_filter(key,
     if the conjunction of all comparators returns True.
 
     :param key: user-supplied --tokeninfo-key= value
-    :param has_tokeninfo_key: user-supplied --has_tokeninfo_key= value
-    :param has_not_tokeninfo_key: user-supplied --has_not_tokeninfo_key= value
     :param tokeninfo_value: user-supplied --tokeninfo-value= value
     :param tokeninfo_value_greater_than: user-supplied --tokeninfo-value-greater-than= value
     :param tokeninfo_value_less_than: user-supplied --tokeninfo-value-less-than= value
@@ -547,7 +545,7 @@ def find(last_auth, assigned, active, tokeninfo_key, tokeninfo_value,
                 for tokenobj in tlist:
                     if tokenobj.type.lower() not in ["totp", "hotp"]:
                         continue
-                    type = tokenobj.type.lower()
+                    ttype = tokenobj.type.lower()
                     owner = u"{!s}@{!s}".format(tokenobj.user.login, tokenobj.user.realm) if tokenobj.user else "n/a"
                     serial = tokenobj.token.serial
                     otplen = tokenobj.token.otplen
@@ -555,11 +553,11 @@ def find(last_auth, assigned, active, tokeninfo_key, tokeninfo_value,
                     if b32:
                         otpkey = b32encode(unhexlify(otpkey))
                     otpkey = to_unicode(otpkey)
-                    if type == "totp":
+                    if ttype == "totp":
                         timestep = tokenobj.get_tokeninfo("timeStep")
-                        print(u"{!s}, {!s}, {!s}, {!s}, {!s}, {!s}".format(owner, serial, otpkey, type, otplen, timestep))
+                        print(u"{!s}, {!s}, {!s}, {!s}, {!s}, {!s}".format(owner, serial, otpkey, ttype, otplen, timestep))
                     else:
-                        print(u"{!s}, {!s}, {!s}, {!s}, {!s}".format(owner, serial, otpkey, type, otplen))
+                        print(u"{!s}, {!s}, {!s}, {!s}, {!s}".format(owner, serial, otpkey, ttype, otplen))
             else:
                 key, token_num, soup = export_pskc(tlist)
                 sys.stderr.write("\n{0!s} tokens exported.\n".format(token_num))

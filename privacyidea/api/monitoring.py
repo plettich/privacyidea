@@ -29,7 +29,7 @@ from privacyidea.api.lib.prepolicy import prepolicy, check_base_action
 from privacyidea.lib.utils import parse_legacy_time
 from privacyidea.lib.log import log_with
 from privacyidea.lib.monitoringstats import (get_stats_keys, get_values,
-                                   get_last_value, delete_stats)
+                                             get_last_value, delete_stats)
 from privacyidea.lib.tokenclass import AUTH_DATE_FORMAT
 from flask import g
 import logging
@@ -83,7 +83,7 @@ def delete_statistics(stats_key):
 
     You can specify the start date and the end date when to delete the
     monitoring data.
-    You should specify the dates including the timezone. Otherwise your client
+    You should specify the dates including the timezone. Otherwise, your client
     could send its local time and the server would interpret it as its own local
     time which would result in deleting unexpected entries.
 
@@ -111,4 +111,3 @@ def get_statistics_last(stats_key):
     last_value = get_last_value(stats_key)
     g.audit_object.log({"success": True})
     return send_result(last_value)
-

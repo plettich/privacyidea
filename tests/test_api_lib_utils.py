@@ -131,8 +131,8 @@ class UtilsTestCase(MyApiTestCase):
                                              "resolver": "resolverX"},
                                     key=key,
                                     algorithm="RS256")
-            r = verify_auth_token(auth_token=auth_token,
-                                  required_role="user")
+            verify_auth_token(auth_token=auth_token,
+                              required_role="user")
             mock_log.assert_any_call("A given JWT definition does not match.")
 
     def test_04_check_jwt_username_in_audit(self):

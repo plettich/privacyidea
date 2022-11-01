@@ -32,7 +32,7 @@ class TokenModelTestCase(MyTestCase):
     def test_02_delete_stats(self):
         key1 = "otherkey"
         now = datetime.datetime.now(tzlocal())
-        write_stats(key1, 12, timestamp=now- timedelta(days=1))
+        write_stats(key1, 12, timestamp=now - timedelta(days=1))
         write_stats(key1, 13, timestamp=now)
         write_stats(key1, 14, timestamp=now + timedelta(days=1))
         db.session.commit()

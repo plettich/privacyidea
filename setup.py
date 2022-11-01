@@ -65,17 +65,17 @@ install_requires = ["beautifulsoup4[lxml]>=4.3.2",
                     "sqlsoup>=0.9.0"]
 
 
-def get_man_pages(dir):
+def get_man_pages(directory):
     """
     Get man pages in a directory.
-    :param dir:
+    :param directory:
     :return: list of file names
     """
-    files = os.listdir(dir)
+    files = os.listdir(directory)
     r_files = []
     for file in files:
         if file.endswith(".1"):
-            r_files.append(dir + "/" + file)
+            r_files.append(directory + "/" + file)
     return r_files
 
 
@@ -101,8 +101,8 @@ setup(
     author='privacyidea.org',
     license='AGPLv3',
     author_email='cornelius@privacyidea.org',
-    url='http://www.privacyidea.org',
-    keywords='OTP, two factor authentication, management, security',
+    url='https://www.privacyidea.org',
+    keywords='OTP, two-factor authentication, management, security',
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5',
     packages=find_packages(),
     scripts=["pi-manage"] + get_scripts("tools"),
