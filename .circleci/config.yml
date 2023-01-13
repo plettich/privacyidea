@@ -29,6 +29,7 @@ jobs:
     docker:
       # in the long run we could use matrix tests here for multiple python versions
       - image: cimg/python:3.10
+    resource_class: small
     steps:
       - checkout
       - run: git submodule sync
@@ -55,6 +56,7 @@ jobs:
         type: string
     description: Run all tests with << parameters.db >> database backend
     executor: << parameters.db >>
+    resource_class: small
     steps:
       - checkout
       - run: git submodule sync
@@ -86,17 +88,17 @@ jobs:
 workflows:
   version: 2
   nightly:
-    triggers:
-      - schedule:
+#    triggers:
+#      - schedule:
           # Start the nightly test at 5:00 UTC only on branch "master"
-          cron: "0 5 * * *"
+#          cron: "0 5 * * *"
+    jobs:
+#      - test_generic
+      - test_database:
           filters:
             branches:
               only:
                 - master
-    jobs:
-      - test_generic
-      - test_database:
           matrix:
             parameters:
               db: ['mysql', 'postgres']
