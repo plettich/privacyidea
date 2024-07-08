@@ -9,6 +9,9 @@ on:
   schedule:
     - cron: '31 10 * * 6'
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: Analyze
@@ -24,12 +27,17 @@ jobs:
         language: [ 'javascript', 'python' ]
 
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+      with:
+        egress-policy: audit
+
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@a82bad71823183e5b120ab52d521460ecb0585fe # v2.24.9
       with:
         languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -40,6 +48,6 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@a82bad71823183e5b120ab52d521460ecb0585fe # v2.24.9
       with:
         category: "/language:${{matrix.language}}"
