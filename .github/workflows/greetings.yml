@@ -5,11 +5,22 @@ on:
     types:
       - opened
 
+permissions:
+  contents: read
+
 jobs:
   greeting:
+    permissions:
+      issues: write  # for actions/first-interaction to comment on first issue
+      pull-requests: write  # for actions/first-interaction to comment on first PR
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/first-interaction@v1
+    - name: Harden Runner
+      uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+      with:
+        egress-policy: audit
+
+    - uses: actions/first-interaction@3c71ce730280171fd1cfb57c00c774f8998586f7 # v1
       continue-on-error: true
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
