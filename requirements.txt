@@ -46,7 +46,7 @@ cryptography==42.0.4
     #   pyopenssl
 defusedxml==0.7.1
     # via privacyIDEA (setup.py)
-flask==1.1.4
+flask==2.2.5
     # via
     #   flask-babel
     #   flask-migrate
