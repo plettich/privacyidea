@@ -9,14 +9,18 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+from sphinx.util import logging
 import sys
 import os
+import requests
 
 # Monkey-patch functools.wraps
 # http://stackoverflow.com/questions/28366818/preserve-default-arguments-of-wrapped-decorated-python-function-in-sphinx-docume
 #import functools
 
 from pallets_sphinx_themes import get_version
+
+logger = logging.getLogger(__name__)
 
 release, version = get_version('privacyIDEA')
 
@@ -191,3 +195,31 @@ plantuml = 'java -Djava.awt.headless=true -jar /usr/share/java/plantuml.jar'
 
 # Use SVG inside <object> in supported browsers (all except IE8), falling back to PNG.
 plantuml_output_format = 'svg'
+
+# Fix for new RTD behavior which clashes with the old pallets sphinx theme
+
+# We are using APIv2 to pull active versions, downloads and subprojects
+# because APIv3 requires a token.
+project_slug = os.environ.get("READTHEDOCS_PROJECT")
+version_slug = os.environ.get("READTHEDOCS_VERSION")
+production_domain = os.environ.get("READTHEDOCS_PRODUCTION_DOMAIN", "readthedocs.org")
+
+try:
+    response_versions = requests.get(
+        f"https://{production_domain}/api/v2/version/?project__slug={project_slug}&active=true",
+        timeout=2,
+    ).json()
+    versions = [
+        (version["slug"], f"/{version['project']['language']}/{version['slug']}/")
+        for version in response_versions["results"]
+    ]
+except Exception:
+    logger.warning(
+        "An error occurred when hitting API to fetch active versions. Defaulting to an empty list.",
+        exc_info=True,
+    )
+    versions = []
+
+html_context = {
+    "versions": versions
+}
