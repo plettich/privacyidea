@@ -16,23 +16,23 @@ import requests
 
 # Monkey-patch functools.wraps
 # http://stackoverflow.com/questions/28366818/preserve-default-arguments-of-wrapped-decorated-python-function-in-sphinx-docume
-#import functools
+import functools
 
 from pallets_sphinx_themes import get_version
 
 logger = logging.getLogger(__name__)
 
-release, version = get_version('privacyIDEA')
+# release, version = get_version('privacyIDEA')
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-#version = '3.8'
+version = '3.10.1'
 # The full version, including alpha/beta/rc tags.
 #release = '2.16dev5'
-#release = version
+release = version
 
 
 def no_op_wraps(func, assigned=None, updated=None):
@@ -47,7 +47,7 @@ def no_op_wraps(func, assigned=None, updated=None):
     return wrapper
 
 
-#functools.wraps = no_op_wraps
+functools.wraps = no_op_wraps
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
