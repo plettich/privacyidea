@@ -221,5 +221,7 @@ except Exception:
     versions = []
 
 html_context = {
+    'current_version': os.environ.get("READTHEDOCS_VERSION_NAME"),
+    'version_slug': version_slug,
     "versions": versions
 }
