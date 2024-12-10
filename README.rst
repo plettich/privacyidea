@@ -39,9 +39,9 @@ privacyIDEA
 .. image:: https://img.shields.io/twitter/follow/privacyidea.svg?style=social&label=Follow
     :alt: privacyIDEA on twitter
 
-privacyIDEA is an open solution for strong two-factor autentication like
+privacyIDEA is an open solution for strong two-factor authentication like
 OTP tokens, SMS, smartphones or SSH keys.
-Using privacyIDEA you can enhance your existing applications like local login
+Using privacyIDEA you can enhance your existing aplications like local login
 (PAM, Windows Credential Provider),
 VPN, remote access, SSH connections, access to web sites or web portals with
 a second factor during authentication. Thus boosting the security of your
