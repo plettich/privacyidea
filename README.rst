@@ -74,7 +74,7 @@ A MachineToken design lets you assign tokens to machines. Thus you can use
 your Yubikey to unlock LUKS, asign SSH keys to SSH servers or use Offline OTP
 with PAM.
 
-You may join the discourse discusion forum to give feedback, help other users,
+You may join the discourse discussion forum to give feedback, help other users,
 discuss questions and ideas:
 https://community.privacyidea.org
 
