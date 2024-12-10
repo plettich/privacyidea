@@ -41,7 +41,7 @@ privacyIDEA
 
 privacyIDEA is an open solution for strong two-factor authentication like
 OTP tokens, SMS, smartphones or SSH keys.
-Using privacyIDEA you can enhance your existing aplications like local login
+Using privacyIDEA you can enhance your existing applications like local login
 (PAM, Windows Credential Provider),
 VPN, remote access, SSH connections, access to web sites or web portals with
 a second factor during authentication. Thus boosting the security of your
@@ -50,7 +50,7 @@ existing applications.
 Overview
 ========
 
-privacyIDEA runs as an additional service in your network and you can connect different
+privacyIDEA runs as an aditional service in your network and you can connect different
 applications to privacyIDEA.
 
 .. image:: https://privacyidea.org/wp-content/uploads/2017/privacyIDEA-Integration.png
