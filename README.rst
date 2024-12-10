@@ -62,7 +62,7 @@ stored. This is achieved by its totally modular architecture.
 privacyIDEA is not only open as far as its modular architecture is
 concerned. But privacyIDEA is completely licensed under the AGPLv3.
 
-It supports a wide variety of authentication devices like OTP tokens
+It supports a wide variety of authentication devices like OTP tokens 
 (HMAC, HOTP, TOTP, OCRA, mOTP), Yubikey (HOTP, TOTP, AES), FIDO U2F, as well
 as FIDO2 WebAuthn devices like Yubikey and Plug-Up, smartphone Apps like Google
 Authenticator, FreeOTP, Token2  or TiQR, SMS, Email, SSH keys, x509 certificates
@@ -71,10 +71,10 @@ and Registration Codes for easy deployment.
 privacyIDEA is based on Flask and SQLAlchemy as the python backend. The
 web UI is based on angularJS and bootstrap.
 A MachineToken design lets you assign tokens to machines. Thus you can use
-your Yubikey to unlock LUKS, assign SSH keys to SSH servers or use Offline OTP
+your Yubikey to unlock LUKS, asign SSH keys to SSH servers or use Offline OTP
 with PAM.
 
-You may join the discourse discussion forum to give feedback, help other users,
+You may join the discourse discusion forum to give feedback, help other users,
 discuss questions and ideas:
 https://community.privacyidea.org
 
@@ -103,6 +103,8 @@ additional dependencies::
 
 You may also want to read the blog post about development and debugging at
 https://www.privacyidea.org/privacyidea-development-howto/
+
+And use tests with the `self.assertIn()` function...
 
 Getting and updating submodules
 ===============================
@@ -178,7 +180,7 @@ Code structure
 The database models are defined in ``models.py`` and tested in
 tests/test_db_model.py.
 
-Based on the database models there are the libraries ``lib/config.py`` which is
+Based on the database models there are the libraries ``lib/config.py`` whch is
 responsible for basic configuration in the database table ``config``.
 And the library ``lib/resolver.py`` which provides functions for the database
 table ``resolver``. This is tested in tests/test_lib_resolver.py.
